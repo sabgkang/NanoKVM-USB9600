@@ -1,3 +1,11 @@
+# NanoKVM-USB cheap alternative
+## MS2130 USB3.0视频采集卡 (RMB17.1) + CH9329F+CH340UART/TTL串口转USB HID全键盘鼠标 (RMB17)
+比 NanoKVM-USB 便宜很多，缺點是
+1. CH9329F 的 baud rate 固定為 9600 8N1 比 NanoKVM-USB 的 57600 慢，mouse 移動可能比較不順
+2. 官方 sipeed usbkvm 軟體使用 57600 baud rate，所以不能直接使用 官方 sipeed usbkvm 軟體
+3. HOST 需要兩個 USB A port 或使用 hub
+
+
 # NanoKVM-USB
 
 <div align="center">
