@@ -90,7 +90,7 @@ export function setSerialPort(port: string): void {
 export function getBaudRate(): number {
   const baudRate = localStorage.getItem(BAUD_RATE_KEY)
   if (!baudRate) {
-    return 57600
+    return 9600
   }
   return parseInt(baudRate, 10)
 }

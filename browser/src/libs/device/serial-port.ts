@@ -14,7 +14,7 @@ type Options = {
 };
 
 export class SerialPort {
-  readonly SERIAL_BAUD_RATE = 57600;
+  readonly SERIAL_BAUD_RATE = 9600;
   readonly READ_TIMEOUT = 500;
   readonly CLEANUP_TIMEOUT = 1000;
 

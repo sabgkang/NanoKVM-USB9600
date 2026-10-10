@@ -34,7 +34,7 @@ async function getSerialPorts(): Promise<string[]> {
 async function openSerialPort(
   e: IpcMainInvokeEvent,
   path: string,
-  baudRate: number = 57600
+  baudRate: number = 9600
 ): Promise<boolean> {
   try {
     const onDisconnect = () => {

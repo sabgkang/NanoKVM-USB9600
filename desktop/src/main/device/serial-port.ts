@@ -7,7 +7,7 @@ type Options = {
 }
 
 export class SerialPort {
-  readonly SERIAL_BAUD_RATE = 57600
+  readonly SERIAL_BAUD_RATE = 9600
   readonly READ_TIMEOUT = 500
 
   private port: SP | null
