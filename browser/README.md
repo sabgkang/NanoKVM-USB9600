@@ -1,31 +1,32 @@
 # NanoKVM-USB Browser
 
-This is the NanoKVM-USB browser version project.
+The browser client is a standalone HTML application. It has no package
+dependencies and does not require a build step.
 
-Online website: [usbkvm.sipeed.com](https://usbkvm.sipeed.com).
+## Run locally
 
-## Development
+Serve this directory from localhost:
 
 ```shell
 cd browser
-pnpm install
-pnpm dev
+python3 -m http.server 8080
 ```
 
-## Deployment
+Open `http://localhost:8080` in desktop Chrome or Chromium.
 
-1. Execute `pnpm build` to build the project.
-2. Execute `pnpm install -g http-server` to install http-server.
-3. Execute `cd dist` to change working directory to `dist/` .
-4. Execute `http-server -p 8080 -a localhost` to run the service.
-5. Open the Chrome browser and visit `http://localhost:8080`.
+Do not open `index.html` directly with a `file://` URL. Camera, microphone,
+clipboard, File System Access, and Web Serial APIs require a secure context;
+`localhost` is treated as secure by supported browsers.
 
-### Deploy in Docker
+## Deploy with Docker
+
+From the repository root:
 
 ```shell
-git clone https://github.com/sipeed/NanoKVM-USB.git
-cd NanoKVM-USB
-docker-compose up -d
+docker compose up -d --build
 ```
 
-Then visit `http://localhost:9000` in your browser.
+Then open `http://localhost:9000`.
+
+Web Serial is currently supported by desktop Chromium-based browsers. Browsers
+without Web Serial can display video but cannot forward keyboard or mouse input.
