@@ -40,7 +40,7 @@ python3 -m http.server 8080
 [http://localhost:8080](http://localhost:8080)，並允許相機存取權限。完成授權後
 會自動連接視訊裝置，再依提示選擇序列埠裝置。
 
-請勿透過 `file://` 網址直接開啟 `index.html`。相機、麥克風、剪貼簿、
+或是使用 `file://` 網址直接開啟 `index.html`，建議使用 Chrome。注意 相機、麥克風、剪貼簿、
 File System Access、全螢幕及 Web Serial 功能都需要安全的瀏覽器執行環境。
 
 ## GitHub Pages
