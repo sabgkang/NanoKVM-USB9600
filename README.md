@@ -17,7 +17,7 @@ Vite、TypeScript、Tailwind CSS、Ant Design 與 Jotai 的前端，已改寫為
 
 - USB 視訊與音訊裝置的權限請求、偵測、選擇及重新連線
 - 解析度、自訂解析度、縮放與旋轉控制
-- 使用既有 HID 封包格式，以 9600 baud 透過 Web Serial 通訊
+- 使用既有 HID 封包格式，可選擇 9600 或 57600 baud 透過 Web Serial 通訊
 - 實體鍵盤、剪貼簿輸入、快捷鍵與虛擬鍵盤
 - 絕對與相對滑鼠模式、Pointer Lock、觸控手勢、滾輪、游標樣式與滑鼠防休眠
 - 使用 File System Access API 儲存 WebM 錄影
@@ -29,10 +29,22 @@ Vite、TypeScript、Tailwind CSS、Ant Design 與 Jotai 的前端，已改寫為
 
 - 支援 Web Serial 的桌面版 Chrome 或其他 Chromium 核心瀏覽器
 - 安全來源：正式環境使用 HTTPS，開發環境可使用 `localhost`
-- USB 視訊擷取裝置及相容的 9600 baud 序列 HID 裝置
+- USB 視訊擷取裝置及相容的 9600 或 57600 baud 序列 HID 裝置
 
 不支援 Web Serial 的瀏覽器仍可顯示視訊，但無法轉送鍵盤與滑鼠輸入。
 File System Access 與鍵盤鎖定功能是否可用，也取決於瀏覽器支援程度。
+
+## 傳輸速率選擇
+
+選擇序列埠裝置前，可在連線視窗中選擇 `9600` 或 `57600` baud：
+
+- CH9329F 搭配 CH340 的 USB HID 裝置請選擇 `9600`。
+- 原版 NanoKVM-USB 或其他使用 57600 baud 的相容裝置請選擇 `57600`。
+
+應用程式預設使用 `9600`，並會透過 `localStorage` 保存最後一次選擇。序列埠
+連線後如需切換速率，請點擊工具列上的序列埠圖示，選擇新的速率，再按下
+「重新連接序列埠裝置」。設定值必須與硬體的實際 baud rate 相同，否則鍵盤與
+滑鼠資料將無法正常傳送。
 
 ## 本機執行
 
