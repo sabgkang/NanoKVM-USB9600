@@ -1,79 +1,76 @@
-# NanoKVM-USB cheap alternative
-## MS2130 USB3.0视频采集卡 (RMB17.1) + CH9329F+CH340UART/TTL串口转USB HID全键盘鼠标 (RMB17)
-比 NanoKVM-USB 便宜很多，缺點是
-1. CH9329F 的 baud rate 固定為 9600 8N1 比 NanoKVM-USB 的 57600 慢，mouse 移動可能比較不順
-2. 官方 sipeed usbkvm 軟體使用 57600 baud rate，所以不能直接使用 官方 sipeed usbkvm 軟體
-3. HOST 需要兩個 USB A port 或使用 hub
+# NanoKVM-USB 9600 單一 HTML 版本
 
+此分支將瀏覽器 KVM 用戶端整合為單一原生 HTML 檔案。原本使用 React、
+Vite、TypeScript、Tailwind CSS、Ant Design 與 Jotai 的前端，已改寫為
+`index.html` 內的原生 HTML、CSS 與 JavaScript。
 
-# NanoKVM-USB
+本版本沒有套件相依性、外部執行階段資源、CDN 資源或建置步驟，可直接透過
+任何靜態網頁伺服器提供服務。
 
-<div align="center">
+## 功能
 
-![NanoKVM-USB](https://wiki.sipeed.com/hardware/assets/NanoKVM/usb/NanoKVM-USB.png)
+- USB 視訊與音訊裝置的權限請求、偵測、選擇及重新連線
+- 解析度、自訂解析度、縮放與旋轉控制
+- 使用既有 HID 封包格式，以 9600 baud 透過 Web Serial 通訊
+- 實體鍵盤、剪貼簿輸入、快捷鍵與虛擬鍵盤
+- 絕對與相對滑鼠模式、Pointer Lock、觸控手勢、滾輪、游標樣式與滑鼠防休眠
+- 使用 File System Access API 儲存 WebM 錄影
+- 全螢幕、鍵盤鎖定、可拖曳工具列與響應式版面
+- 十種介面語言
+- 透過 `localStorage` 延續既有偏好設定與自訂快捷鍵
 
-</div>
+## 系統需求
 
-> Finger-sized 4K USB KVM for Server/SBCs
+- 支援 Web Serial 的桌面版 Chrome 或其他 Chromium 核心瀏覽器
+- 安全來源：正式環境使用 HTTPS，開發環境可使用 `localhost`
+- USB 視訊擷取裝置及相容的 9600 baud 序列 HID 裝置
 
-## Introduction
+不支援 Web Serial 的瀏覽器仍可顯示視訊，但無法轉送鍵盤與滑鼠輸入。
+File System Access 與鍵盤鎖定功能是否可用，也取決於瀏覽器支援程度。
 
-The NanoKVM-USB is a convenient tool for operations and multi-device collaboration. It allows you to perform maintenance tasks without the need for a keyboard, mouse, or monitor. Using just a single computer and no additional software downloads, you can start graphical operations directly through the Chrome browser.
+## 本機執行
 
-NanoKVM-USB captures HDMI video signals and transmits them to the host via USB 3.0. Unlike typical USB capture cards, NanoKVM-USB also captures keyboard and mouse input from the host and sends it to the target machine in real-time, eliminating the need for traditional screen and peripheral connections. It also supports HDMI loop-out, with a maximum resolution of 4K@30Hz, making it easy to connect to a large display.
+在儲存庫根目錄啟動任一靜態 HTTP 伺服器，例如：
 
-![wiring](https://wiki.sipeed.com/hardware/assets/NanoKVM/usb/wiring.png)
-<br>
+```shell
+python3 -m http.server 8080
+```
 
-## Technical Specifications
+接著使用桌面版 Chrome 或 Chromium 開啟
+[http://localhost:8080](http://localhost:8080)，並允許相機存取權限。完成授權後
+會自動連接視訊裝置，再依提示選擇序列埠裝置。
 
-| | NanoKVM-USB | Mini-KVM | KIWI-KVM |
-| --- | :---: | :---: | :---: |
-| HDMI Input | 4K@30fps / Pro 4K@60fps  | 1080P@60fps | 4K@30fps |
-| HDMI Loopout | 4K@30fps / Pro 4K@60fps | None | None |
-| USB Capture | 1080P@60fps / Pro 4K@60fps | 1080P@60fps | 1080P@60fps |
-| USB Interface | USB3.0 | USB2.0 | USB3.0 |
-| USB Switch | Yes | Yes | No |
-| Keyboard & Mouse | Yes | Yes | Yes |
-| Clipboard | Yes | Yes | Yes |
-| Software | No setup needed, works in Chrome | Host App required | Host App required |
-| Latency | 50-100ms | 50-100ms | 50-100ms |
-| Volume | 57x25x23mm | 61x13.5x53mm | 80x80x10mm |
-| Shell Material | Aluminum Alloy | Aluminum Alloy | Plastics |
-| Color | Black / Blue / Red | Black | Black |
-| Price | `$39.9/$49.9`, Pro `$59.9/$69.9` | `$89 / $109` | `$69 / $99` |
+請勿透過 `file://` 網址直接開啟 `index.html`。相機、麥克風、剪貼簿、
+File System Access、全螢幕及 Web Serial 功能都需要安全的瀏覽器執行環境。
 
-<br>
+## GitHub Pages
 
-![interface](https://wiki.sipeed.com/hardware/assets/NanoKVM/usb/interface.jpg)
+此單一 HTML 版本會從 `html-version` 分支的根目錄部署至 GitHub Pages：
 
-> **Note:** For the best experience, please use a USB 3.0 cable to connect the device.
+[https://sabgkang.github.io/NanoKVM-USB9600/](https://sabgkang.github.io/NanoKVM-USB9600/)
 
-## Resources
+GitHub Pages 預設使用 HTTPS，符合相機、麥克風與 Web Serial 所需的安全來源
+條件。請使用桌面版 Chrome 或 Chromium 開啟頁面。
 
-We offer two versions of the application: [Browser](https://github.com/sipeed/NanoKVM-USB/tree/main/browser) and [Desktop](https://github.com/sipeed/NanoKVM-USB/tree/main/desktop). Both are available on the [Releases page](https://github.com/sipeed/NanoKVM-USB/releases).
+## 部署
 
-### Browser Version
+將 `index.html` 上傳至任一靜態網站主機，並透過 HTTPS 提供服務。不需要安裝
+Node.js，也不需要執行前端建置。正式環境的入口維持為 `/index.html`。
 
-Access our online service at [usbkvm.sipeed.com](https://usbkvm.sipeed.com).
+Nginx 設定範例：
 
-For self-deployment, download the `NanoKVM-USB-xxx-browser.zip` and serve it. Refer to the [Deployment Guide](https://wiki.sipeed.com/hardware/en/kvm/NanoKVM_USB/development.html) for details. If you are using Docker, simply run `docker-compose up -d`.
+```nginx
+server {
+    listen 80;
+    root /usr/share/nginx/html;
+    index index.html;
+}
+```
 
+## 從 Vite 版本遷移
 
-> Please use the desktop Chrome browser.
+應用程式狀態與瀏覽器整合已改用原生 DOM 事件及集中式 JavaScript 狀態物件。
+樣式、圖示、翻譯資料與應用程式邏輯皆內嵌於 `index.html`。
 
-### Desktop Version
-
-Download the appropriate package for your operating system and install it.
-
-> For Linux users, a permission error may occur when connecting to the serial port.  
-> To resolve this run the commands below matching your system, then log out and log back in or restart your system.
-> #### Debian
-> `sudo usermod -a -G dialout $USER`
-> #### Arch
-> `sudo usermod -a -G uucp $USER`
-## Where to Buy
-
-* [AliExpress Store]() (To be released)
-* [Taobao Store]() (To be released)
-* [Pre-sale Page](https://sipeed.com/nanokvm/usb)
+本版本不再使用 `pnpm install`、`pnpm dev` 或 `pnpm build`。如需修改應用程式，
+直接編輯 `index.html`，再重新載入靜態頁面即可。
